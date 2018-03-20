@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>The Magical Cat Button</title>
+</head>
+
+<body>
+  <button id="cat-button">magical cat button</button>
+  <div id="images">
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script type="text/javascript">
+    //When user clicks the button start the function "an event listener, and a callback function"
+    $("#cat-button").on("click", function() {
+
+      //URL for getting cat gifs
+      var queryURL = "https://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=cats";
+
+      //ajax function that retrieves gifs from URL variable above "A jQuery method"
+      $.ajax({
+        url: queryURL,
+        method: "GET"
+      })
+
+      //after retrieving the gif, start secondary function for appending gifs to page
+      //The .then is a promise that allows us to do async code""
+      .then(function(response) {
+        //always console log this portion so you know what the json data is.  Looking forward to line 34 it is response.data.image_original_url
+        
+        //create variable for gif url received
+        //access variables, call functions""
+        var imageUrl = response.data.image_original_url;
+
+        //start buildingn image placeholder dynamically
+        //it's creating it b/c it's using the brackets"
+        var catImage = $("<img>");
+
+        //add imageUrl 
+        catImage.attr("src", imageUrl);
+        catImage.attr("alt", "cat image");
+
+        //add the new image before the others on the page
+        $("#images").prepend(catImage);
+      });
+    });
+  </script>
+</body>
+
+</html>
